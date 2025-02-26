@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Chatbot</h2>
+        </div>
+        <div class="chat-history" id="chatHistory">
+            <!-- As mensagens serão exibidas aqui -->
+        </div>
+        <div class="chat-input">
+            <textarea id="userInput" placeholder="Digite sua mensagem..."></textarea>
+            <button id="sendMessage" onclick="sendMessage()">Enviar</button>
+            <label class="media-upload" for="fileInput">
+                <input type="file" id="fileInput" style="display: none;" />
+                <span>📎</span>
+            </label>
+        </div>
+    </div>
+
+    <script>
+        const chatHistory = document.getElementById('chatHistory');
+        
+        // Função para enviar mensagens
+        function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            if (userInput.trim() === '') return; // Não envia se a mensagem for vazia
+            
+            // Exibe a mensagem do usuário no chat
+            const userMessage = `<div class="message user-message">${userInput}</div>`;
+            chatHistory.innerHTML += userMessage;
+
+            // Limpa o campo de entrada de texto
+            document.getElementById('userInput').value = '';
+
+            // Simula a resposta do chatbot
+            setTimeout(() => {
+                const botMessage = `<div class="message bot-message">Resposta automática do chatbot</div>`;
+                chatHistory.innerHTML += botMessage;
+                chatHistory.scrollTop = chatHistory.scrollHeight; // Rola para a última mensagem
+            }, 1000);
+
+            // Rola para a última mensagem
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        // Função para lidar com o envio de arquivos
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const fileMessage = `<div class="message file-message">📎 Arquivo enviado: ${file.name}</div>`;
+                chatHistory.innerHTML += fileMessage;
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
+
