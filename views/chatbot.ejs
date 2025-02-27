@@ -9,56 +9,74 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Chatbot</h2>
+            Chatbot
         </div>
+    
         <div class="chat-history" id="chatHistory">
-            <!-- As mensagens serão exibidas aqui -->
+            <!-- As mensagens serão adicionadas aqui dinamicamente -->
         </div>
+    
         <div class="chat-input">
             <textarea id="userInput" placeholder="Digite sua mensagem..."></textarea>
             <button id="sendMessage" onclick="sendMessage()">Enviar</button>
             <label class="media-upload" for="fileInput">
                 <input type="file" id="fileInput" style="display: none;" />
-                <span>📎</span>
+                <span><img class="btn-add-midia" src="../imagens/images.png" alt="add media button"></span>
             </label>
         </div>
     </div>
+    
 
     <script>
         const chatHistory = document.getElementById('chatHistory');
         
         // Função para enviar mensagens
         function sendMessage() {
-            const userInput = document.getElementById('userInput').value;
-            if (userInput.trim() === '') return; // Não envia se a mensagem for vazia
-            
-            // Exibe a mensagem do usuário no chat
-            const userMessage = `<div class="message user-message">${userInput}</div>`;
-            chatHistory.innerHTML += userMessage;
+    const messageText = document.getElementById('userInput').value;
+    const chatHistory = document.getElementById('chatHistory');
 
-            // Limpa o campo de entrada de texto
-            document.getElementById('userInput').value = '';
+    if (messageText.trim() !== '') {
+        // Adiciona a mensagem do usuário à direita
+        const userMessage = document.createElement('div');
+        userMessage.className = 'message user-message';
+        userMessage.innerText = messageText;
+        chatHistory.appendChild(userMessage);
 
-            // Simula a resposta do chatbot
-            setTimeout(() => {
-                const botMessage = `<div class="message bot-message">Resposta automática do chatbot</div>`;
-                chatHistory.innerHTML += botMessage;
-                chatHistory.scrollTop = chatHistory.scrollHeight; // Rola para a última mensagem
-            }, 1000);
+        // Limpa a caixa de entrada
+        document.getElementById('userInput').value = '';
 
-            // Rola para a última mensagem
+        // Simula uma resposta automática do chatbot à esquerda
+        setTimeout(() => {
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot-message';
+            botMessage.innerText = 'Resposta automática do chatbot';
+            chatHistory.appendChild(botMessage);
+
+            // Scroll automático para a mensagem mais recente
             chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
+        }, 1000);
 
-        // Função para lidar com o envio de arquivos
-        document.getElementById('fileInput').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const fileMessage = `<div class="message file-message">📎 Arquivo enviado: ${file.name}</div>`;
-                chatHistory.innerHTML += fileMessage;
-                chatHistory.scrollTop = chatHistory.scrollHeight;
-            }
-        });
+        // Scroll automático para a mensagem mais recente
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+}
+
+// Lidar com upload de arquivo (exibição de nome do arquivo no chat)
+document.getElementById('fileInput').addEventListener('change', function() {
+    const file = this.files[0];
+    const chatHistory = document.getElementById('chatHistory');
+
+    if (file) {
+        const fileMessage = document.createElement('div');
+        fileMessage.className = 'message file-message';
+        fileMessage.innerText = `Arquivo enviado: ${file.name}`;
+        chatHistory.appendChild(fileMessage);
+
+        // Scroll automático para a mensagem mais recente
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+});
+
     </script>
 </body>
 </html>

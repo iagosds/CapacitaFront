@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Definir porta (use uma porta padrão caso a variável de ambiente PORT não esteja definida)
-const PORT = process.env.PORT || 3000;
+// Middleware para tratar dados do corpo da requisição (formulários)
+app.use(express.urlencoded({ extended: true }));
 
 // Configurar o EJS
 app.set('view engine', 'ejs');
@@ -35,6 +35,7 @@ app.post('/login', (req, res) => {
 });
 
 // Iniciar o servidor
+const PORT = process.env.PORT || 3000; // Definir porta
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });

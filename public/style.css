@@ -1,64 +1,10 @@
-/* Estilos para a página de login */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.login-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-}
-
-h2 {
-    text-align: center;
-}
-
-form div {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
 /* Estilos para a página do chatbot */
 .chat-container {
-    width: 400px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px;
 }
 
 .chat-header {
@@ -66,6 +12,8 @@ button:hover {
     color: white;
     padding: 15px;
     text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .chat-history {
@@ -85,10 +33,10 @@ button:hover {
 
 .chat-input textarea {
     flex-grow: 1;
-    padding: 10px;
+    padding: 7px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    margin-right: 10px;
+    margin-right: 5px;
     resize: none;
 }
 
@@ -111,26 +59,45 @@ button:hover {
 }
 
 .message {
+    display: inline-block;
     padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    width: fit-content;
-    max-width: 70%;
+    margin: 10px;
+    border-radius: 15px;
+    max-width: 60%;
+    word-wrap: break-word;
+    font-size: 14px;
+    clear: both;
 }
 
-.user-message {
-    background-color: #007BFF;
-    color: white;
-    align-self: flex-end;
-}
-
+/* Mensagens do chatbot (alinhadas à esquerda) */
 .bot-message {
     background-color: #f1f1f1;
-    color: black;
+    align-self: flex-start;
+    float: left;
+    border-radius: 15px 15px 15px 0; /* Bolha no estilo de fala */
+    clear: both;
+}
+
+/* Mensagens do usuário (alinhadas à direita) */
+.user-message {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+    float: right;
+    border-radius: 15px 15px 0 15px; /* Bolha no estilo de fala */
+    clear: both;
 }
 
 .file-message {
     background-color: #ddd;
     color: black;
     font-style: italic;
+    align-self: flex-end;
+    border-radius: 10px;
 }
+
+.btn-add-midia {
+    width: 1cm;
+    height: 1cm;
+}
+
