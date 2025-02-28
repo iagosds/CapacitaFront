@@ -1,83 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
     <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
     <div class="chat-container">
         <div class="chat-header">
             Chatbot
         </div>
-    
+
         <div class="chat-history" id="chatHistory">
             <!-- As mensagens serão adicionadas aqui dinamicamente -->
         </div>
-    
+
         <div class="chat-input">
             <textarea id="userInput" placeholder="Digite sua mensagem..."></textarea>
             <button id="sendMessage" onclick="sendMessage()">Enviar</button>
             <label class="media-upload" for="fileInput">
                 <input type="file" id="fileInput" style="display: none;" />
-                <span><img class="btn-add-midia" src="../imagens/images.png" alt="add media button"></span>
+                <span><img class= "btn-add-midia" src="../imagens/images.png" alt="add midia button"></span>
             </label>
         </div>
+
     </div>
-    
+
 
     <script>
         const chatHistory = document.getElementById('chatHistory');
-        
+
         // Função para enviar mensagens
         function sendMessage() {
-    const messageText = document.getElementById('userInput').value;
-    const chatHistory = document.getElementById('chatHistory');
+            const messageText = document.getElementById('userInput').value;
+            const chatHistory = document.getElementById('chatHistory');
+            const fileInput = document.getElementById('fileInput');
+            const selectedFile = fileInput.files[0];  // Verifica se há um arquivo selecionado
 
-    if (messageText.trim() !== '') {
-        // Adiciona a mensagem do usuário à direita
-        const userMessage = document.createElement('div');
-        userMessage.className = 'message user-message';
-        userMessage.innerText = messageText;
-        chatHistory.appendChild(userMessage);
+            // Verifica se há uma mensagem de texto ou um arquivo selecionado
+            if (messageText.trim() !== '' || selectedFile) {
+                const userMessageContainer = document.createElement('div');
+                userMessageContainer.className = 'message user-message';
 
-        // Limpa a caixa de entrada
-        document.getElementById('userInput').value = '';
+                // Adiciona a mensagem de texto, se houver
+                if (messageText.trim() !== '') {
+                    const userMessageText = document.createElement('div');
+                    userMessageText.innerText = messageText;
+                    userMessageContainer.appendChild(userMessageText);
+                }
 
-        // Simula uma resposta automática do chatbot à esquerda
-        setTimeout(() => {
-            const botMessage = document.createElement('div');
-            botMessage.className = 'message bot-message';
-            botMessage.innerText = 'Resposta automática do chatbot';
-            chatHistory.appendChild(botMessage);
+                // Adiciona o arquivo enviado, se houver
+                if (selectedFile) {
+                    const fileMessage = document.createElement('div');
+                    fileMessage.className = 'file-message';
+                    fileMessage.innerHTML = `<strong>Arquivo enviado:</strong> ${selectedFile.name}`;
+                    userMessageContainer.appendChild(fileMessage);
 
-            // Scroll automático para a mensagem mais recente
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }, 1000);
+                    // Limpa o campo de arquivo após o envio
+                    fileInput.value = '';
+                }
 
-        // Scroll automático para a mensagem mais recente
-        chatHistory.scrollTop = chatHistory.scrollHeight;
-    }
-}
+                // Adiciona a mensagem e/ou arquivo ao histórico de chat
+                chatHistory.appendChild(userMessageContainer);
 
-// Lidar com upload de arquivo (exibição de nome do arquivo no chat)
-document.getElementById('fileInput').addEventListener('change', function() {
-    const file = this.files[0];
-    const chatHistory = document.getElementById('chatHistory');
+                // Limpa o campo de texto após o envio
+                document.getElementById('userInput').value = '';
 
-    if (file) {
-        const fileMessage = document.createElement('div');
-        fileMessage.className = 'message file-message';
-        fileMessage.innerText = `Arquivo enviado: ${file.name}`;
-        chatHistory.appendChild(fileMessage);
+                // Resposta automática do chatbot (simulada)
+                setTimeout(() => {
+                    const botMessageContainer = document.createElement('div');
+                    botMessageContainer.className = 'message bot-message';
+                    botMessageContainer.innerText = 'Resposta automática do chatbot';
+                    chatHistory.appendChild(botMessageContainer);
 
-        // Scroll automático para a mensagem mais recente
-        chatHistory.scrollTop = chatHistory.scrollHeight;
-    }
-});
+                    // Scroll automático para a última mensagem
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                }, 1000);
 
+                // Scroll automático para a última mensagem
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+        }
     </script>
 </body>
-</html>
 
+</html>
